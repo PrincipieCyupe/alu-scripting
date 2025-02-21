@@ -1,11 +1,17 @@
 #!/usr/bin/python3
-"""Prints the title of the first 10 hot posts listed for a given subreddit"""
+"""
+Module that queries the Reddit API and prints
+the titles of the first 10 hot posts listed for a given subreddit.
+"""
 
 import requests
 
 
 def top_ten(subreddit):
-    """Fetches and prints the first 10 hot post titles of a given subreddit."""
+    """
+    Fetches and prints the titles of the first 10 hot posts for a subreddit.
+    If the subreddit is invalid or has no posts, prints None.
+    """
     if not subreddit or not isinstance(subreddit, str):
         print(None)
         return
@@ -16,8 +22,8 @@ def top_ten(subreddit):
     try:
         response = requests.get(url, headers=headers, allow_redirects=False)
         
-        # Check if status code indicates failure
-        if response.status_code != 200:
+        # Check if subreddit is invalid (Reddit returns 404 for invalid subreddits)
+        if response.status_code == 404:
             print(None)
             return
 
